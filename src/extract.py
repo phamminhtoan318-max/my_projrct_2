@@ -7,14 +7,10 @@ logger = logging.getLogger(__name__)
 
 
 def extract_data(file_path):
-    chunks = []
     logger.info(f"Extracting data from {file_path}") 
 
     try:
-        df = pd.read_csv(file_path, dtype=str, encoding="utf-8-sig", chunksize= 100)
-        for chunk in df:  
-            chunks.append(chunk)
-        df = pd.concat(chunks, ignore_index=True)
+        df = pd.read_csv(file_path, dtype=str, encoding="utf-8-sig")
     except FileNotFoundError: 
         logger.error(f"File not found at {file_path}")
         return None
