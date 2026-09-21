@@ -1,13 +1,13 @@
-FROM 
+FROM python:3.14.5-slim
 
-WORKDIR 
+WORKDIR /app
 
-COPY 
+COPY requirements.txt /app
 
-RUN 
+RUN pip install -r requirements.txt
 
-COPY 
+COPY . /app
 
-EXPOSE 
+EXPOSE 5000
 
-CMD 
+CMD ["python", "main.py"]
