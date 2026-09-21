@@ -4,6 +4,8 @@ from pathlib import Path
 
 from src.logger import setup_logging
 from src.extract import extract_data
+from src.transform import transform_data
+from src.validate import validate
 
 logger = logging.getLogger(__name__)
 
@@ -22,8 +24,17 @@ def main():
     if df is None:
         logger.error("Pipeline thất bại ở bước trích xuất dữ liệu!")
         return 1
-
     
+    df = transform_data(df, STAGING_PATH)
+    if df is None:
+        logger.error("Pipeline thất bại ở bước làm sạch dữ liệu!")
+        return 1
+
+    report = validate(df)
+    if not report.passed:
+        logger.error("Pipeline thất bại ở bước kiểm tra dữ liệu!")
+        return 1
+
     logger.info("END PIPELINE")
     return 0
 
