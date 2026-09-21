@@ -31,7 +31,7 @@ def main():
         return 1
 
     report = validate(df)
-    if not report.passed:
+    if not report["passed"]:
         logger.error("Pipeline thất bại ở bước kiểm tra dữ liệu!")
         return 1
 
