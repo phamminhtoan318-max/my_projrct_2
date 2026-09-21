@@ -6,6 +6,6 @@ __pycache__/
 .env.example
 data/
 README.md  
-*.pyc 
+*.pyc  
 .pytest_cache/
 tests/
