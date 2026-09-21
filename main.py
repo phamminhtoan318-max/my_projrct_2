@@ -6,6 +6,8 @@ from src.logger import setup_logging
 from src.extract import extract_data
 from src.transform import transform_data
 from src.validate import validate
+from src.quality import generate_quality_report
+from src.load import load_to_sql
 
 logger = logging.getLogger(__name__)
 
@@ -33,6 +35,13 @@ def main():
     report = validate(df)
     if not report["passed"]:
         logger.error("Pipeline thất bại ở bước kiểm tra dữ liệu!")
+        return 1
+
+    generate_quality_report(df)
+
+    ok = load_to_sql(df)
+    if not ok:
+        logger.error("Pipeline thất bại ở bước ghi vào SQL Server!")
         return 1
 
     logger.info("END PIPELINE")
